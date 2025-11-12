@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLogin } from '../hooks/useAuth'
 
@@ -27,24 +27,44 @@ export default function Login({ onLogin }: LoginProps) {
     }
   }
 
+  // Generate stars for background
+  useEffect(() => {
+    const starsContainer = document.createElement('div')
+    starsContainer.className = 'stars'
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div')
+      star.className = 'star'
+      star.style.left = `${Math.random() * 100}%`
+      star.style.top = `${Math.random() * 100}%`
+      star.style.animationDelay = `${Math.random() * 3}s`
+      starsContainer.appendChild(star)
+    }
+    document.body.appendChild(starsContainer)
+    return () => {
+      document.body.removeChild(starsContainer)
+    }
+  }, [])
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center px-4">
-      <div className="max-w-md w-full">
+    <div className="min-h-screen flex items-center justify-center px-4 py-8">
+      <div className="max-w-md w-full fade-in">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded-full mb-4 shadow-lg shadow-blue-500/50">
             <svg className="h-10 w-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Patch Pilot</h1>
-          <p className="mt-2 text-gray-600">AI-Powered Code Review System</p>
+          <h1 className="text-4xl font-bold text-white drop-shadow-lg">🚀 Patch Pilot</h1>
+          <p className="mt-2 text-gray-300">AI-Powered Code Review in Space</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-xl font-semibold mb-6 text-gray-800">Sign in to your account</h2>
+        <div className="glass-card p-8 sm:p-10">
+          <h2 className="text-xl font-semibold mb-6 text-gray-100 flex items-center gap-2">
+            <span>🌟</span> Sign in to your account
+          </h2>
           
           {error && (
-            <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 rounded mb-6 flex items-center">
+            <div className="bg-red-500/10 border-l-4 border-red-500 text-red-400 p-3 rounded-lg mb-6 flex items-center backdrop-blur-sm">
               <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
               </svg>
@@ -54,7 +74,7 @@ export default function Login({ onLogin }: LoginProps) {
           
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Username
               </label>
               <div className="relative">
@@ -67,7 +87,7 @@ export default function Login({ onLogin }: LoginProps) {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                  className="input-field w-full pl-10 pr-3 py-2.5"
                   placeholder="Enter your username"
                   required
                 />
@@ -75,7 +95,7 @@ export default function Login({ onLogin }: LoginProps) {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-300 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -88,7 +108,7 @@ export default function Login({ onLogin }: LoginProps) {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                  className="input-field w-full pl-10 pr-10 py-2.5"
                   placeholder="Enter your password"
                   required
                 />
@@ -111,7 +131,7 @@ export default function Login({ onLogin }: LoginProps) {
             <button
               type="submit"
               disabled={login.isPending}
-              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold py-3 px-4 rounded-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary w-full py-3 px-4 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {login.isPending ? (
                 <span className="flex items-center justify-center">
@@ -121,20 +141,24 @@ export default function Login({ onLogin }: LoginProps) {
                   </svg>
                   Signing in...
                 </span>
-              ) : 'Sign in'}
+              ) : (
+                <>
+                  <span>🚀</span> Sign in
+                </>
+              )}
             </button>
           </form>
           
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-              Demo credentials: <span className="font-medium">admin</span> / <span className="font-medium">password</span>
+            <p className="text-sm text-gray-400">
+              Demo credentials: <span className="font-medium text-blue-400">admin</span> / <span className="font-medium text-blue-400">password</span>
             </p>
           </div>
         </div>
 
         <div className="text-center mt-6">
           <p className="text-sm text-gray-500">
-            © 2024 Patch Pilot by aekmohop@gmail.com
+            © 2024 Patch Pilot by <span className="text-blue-400">aekmohop@gmail.com</span>
           </p>
         </div>
       </div>

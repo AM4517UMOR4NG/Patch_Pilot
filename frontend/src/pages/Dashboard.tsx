@@ -22,16 +22,18 @@ export default function Dashboard() {
   return (
     <div>
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="glass-card mx-4 mt-4 mb-8 sm:mx-6 lg:mx-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-              <p className="mt-1 text-sm text-gray-500">Monitor your repositories and code reviews</p>
+              <h1 className="text-3xl font-bold text-white flex items-center gap-2">
+                🌌 Dashboard
+              </h1>
+              <p className="mt-1 text-sm text-gray-300">Monitor your repositories and code reviews</p>
             </div>
             <Link
               to="/repos/new"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all"
+              className="btn-primary inline-flex items-center px-4 py-2 text-sm font-medium"
             >
               <svg className="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -44,31 +46,31 @@ export default function Dashboard() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+          <div className="glass-card p-6 hover:scale-105 transition-transform duration-200">
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-blue-100 rounded-lg p-3">
-                <svg className="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex-shrink-0 bg-blue-600/20 rounded-lg p-3">
+                <svg className="h-6 w-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Repositories</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.totalRepos}</p>
+                <p className="text-sm font-medium text-gray-400">Repositories</p>
+                <p className="text-2xl font-bold text-white">{stats.totalRepos}</p>
               </div>
             </div>
           </div>
 
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center">
-              <div className="flex-shrink-0 bg-green-100 rounded-lg p-3">
-                <svg className="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="flex-shrink-0 bg-green-600/20 rounded-lg p-3">
+                <svg className="h-6 w-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
                 </svg>
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Active PRs</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.activePRs}</p>
+                <p className="text-sm font-medium text-gray-400">Active PRs</p>
+                <p className="text-2xl font-bold text-white">{stats.activePRs}</p>
               </div>
             </div>
           </div>
