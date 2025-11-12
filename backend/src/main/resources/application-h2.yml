@@ -2,7 +2,7 @@ spring:
   main:
     allow-circular-references: true
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:file:./data/patchpilot
     driver-class-name: org.h2.Driver
     username: sa
     password: 
@@ -13,12 +13,12 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     defer-datasource-initialization: true
   sql:
     init:
-      mode: always
+      mode: embedded
       platform: h2
       data-locations: classpath:data-h2.sql
 

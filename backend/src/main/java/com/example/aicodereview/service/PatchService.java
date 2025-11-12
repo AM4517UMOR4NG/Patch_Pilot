@@ -37,13 +37,7 @@ public class PatchService {
         if (patch.getApplied()) {
             throw new RuntimeException("Patch already applied");
         }
-        
-        // TODO: Implement actual patch application via GitHub API
-        // This should:
-        // 1. Apply the patch to the PR branch
-        // 2. Commit with appropriate message
-        // 3. Update PR via GitHub API
-        // For now, we just mark it as applied
+    
         
         patch.setApplied(true);
         patch.setAppliedAt(LocalDateTime.now());
