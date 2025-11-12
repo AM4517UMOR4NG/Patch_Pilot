@@ -78,4 +78,4 @@ jobs:
     
     - name: Test docker-compose
       run: |
-        docker-compose config
+        docker compose config
