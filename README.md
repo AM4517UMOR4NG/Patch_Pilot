@@ -305,9 +305,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - All contributors and testers
 
 ---
-
-<div align="center">
-  <strong>Built with ❤️ by aekmohop@gmail.com</strong>
-  <br>
-  ⭐ Star this repository if you find it helpful!
-</div>
