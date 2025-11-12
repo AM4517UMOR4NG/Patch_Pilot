@@ -1,0 +1,24 @@
+{
+  "id": 1,
+  "runId": 1,
+  "filePath": "src/main/java/com/example/AuthController.java",
+  "lineNumber": 45,
+  "endLineNumber": 48,
+  "severity": "HIGH",
+  "category": "Security",
+  "title": "Potential SQL Injection Vulnerability",
+  "description": "User input is directly concatenated into SQL query without proper sanitization. This could allow SQL injection attacks.",
+  "codeSnippet": "String query = \"SELECT * FROM users WHERE username = '\" + username + \"' AND password = '\" + password + \"'\";\nResultSet rs = statement.executeQuery(query);",
+  "isResolved": false,
+  "createdAt": "2024-01-15T10:35:00Z",
+  "suggestedPatches": [
+    {
+      "id": 1,
+      "findingId": 1,
+      "unifiedDiff": "--- a/src/main/java/com/example/AuthController.java\n+++ b/src/main/java/com/example/AuthController.java\n@@ -45,2 +45,4 @@\n-String query = \"SELECT * FROM users WHERE username = '\" + username + \"' AND password = '\" + password + \"'\";\n-ResultSet rs = statement.executeQuery(query);\n+String query = \"SELECT * FROM users WHERE username = ? AND password = ?\";\n+PreparedStatement pstmt = connection.prepareStatement(query);\n+pstmt.setString(1, username);\n+pstmt.setString(2, password);\n+ResultSet rs = pstmt.executeQuery();",
+      "explanation": "Replace string concatenation with parameterized queries using PreparedStatement to prevent SQL injection.",
+      "applied": false,
+      "createdAt": "2024-01-15T10:35:30Z"
+    }
+  ]
+}

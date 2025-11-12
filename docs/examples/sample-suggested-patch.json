@@ -1,0 +1,10 @@
+{
+  "id": 2,
+  "findingId": 2,
+  "unifiedDiff": "--- a/src/components/UserInput.js\n+++ b/src/components/UserInput.js\n@@ -23,7 +23,11 @@ function UserInput({ onSubmit }) {\n   const handleSubmit = (e) => {\n     e.preventDefault();\n-    document.getElementById('output').innerHTML = userInput;\n+    // Sanitize user input to prevent XSS\n+    const sanitized = userInput\n+      .replace(/</g, '&lt;')\n+      .replace(/>/g, '&gt;')\n+      .replace(/\"/g, '&quot;');\n+    document.getElementById('output').textContent = sanitized;\n     onSubmit(userInput);\n   };\n",
+  "explanation": "Sanitize user input and use textContent instead of innerHTML to prevent Cross-Site Scripting (XSS) attacks. This prevents malicious script injection through user-controlled data.",
+  "applied": false,
+  "appliedAt": null,
+  "appliedBy": null,
+  "createdAt": "2024-01-15T10:36:00Z"
+}

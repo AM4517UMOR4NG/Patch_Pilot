@@ -1,0 +1,44 @@
+{
+  "action": "opened",
+  "number": 42,
+  "pull_request": {
+    "id": 1234567,
+    "number": 42,
+    "state": "open",
+    "title": "Fix critical authentication bug",
+    "body": "This PR fixes a null pointer exception in the authentication module when users attempt to login with empty credentials.",
+    "user": {
+      "login": "developer123",
+      "id": 987654,
+      "type": "User"
+    },
+    "head": {
+      "ref": "fix-auth-bug",
+      "sha": "abc123def456789012345678901234567890abcd"
+    },
+    "base": {
+      "ref": "main",
+      "sha": "def456abc123789012345678901234567890abcd"
+    },
+    "created_at": "2024-01-15T10:30:00Z",
+    "updated_at": "2024-01-15T10:30:00Z"
+  },
+  "repository": {
+    "id": 555555,
+    "name": "sample-app",
+    "full_name": "example/sample-app",
+    "private": false,
+    "owner": {
+      "login": "example",
+      "id": 111111,
+      "type": "Organization"
+    },
+    "clone_url": "https://github.com/example/sample-app.git",
+    "default_branch": "main"
+  },
+  "sender": {
+    "login": "developer123",
+    "id": 987654,
+    "type": "User"
+  }
+}
