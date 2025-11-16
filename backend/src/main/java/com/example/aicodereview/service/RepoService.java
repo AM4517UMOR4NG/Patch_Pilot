@@ -3,6 +3,7 @@ package com.example.aicodereview.service;
 import com.example.aicodereview.dto.RepoDto;
 import com.example.aicodereview.entity.Repo;
 import com.example.aicodereview.repository.RepoRepository;
+import com.example.aicodereview.util.RepoNameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,13 +33,15 @@ public class RepoService {
     }
 
     public RepoDto createRepo(RepoDto repoDto) {
-        if (repoRepository.existsByName(repoDto.getName())) {
+        String normalizedName = RepoNameUtils.normalize(repoDto.getName(), repoDto.getCloneUrl());
+
+        if (repoRepository.existsByNameIgnoreCase(normalizedName)) {
             throw new RuntimeException("Repository with this name already exists");
         }
         
         Repo repo = new Repo();
-        repo.setName(repoDto.getName());
-        repo.setCloneUrl(repoDto.getCloneUrl());
+        repo.setName(normalizedName);
+        repo.setCloneUrl(ensureCloneUrl(repoDto.getCloneUrl(), normalizedName));
         repo.setDefaultBranch(repoDto.getDefaultBranch());
         repo.setWebhookSecret(repoDto.getWebhookSecret());
         
@@ -49,8 +52,15 @@ public class RepoService {
     public RepoDto updateRepo(Long id, RepoDto repoDto) {
         Repo repo = repoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Repository not found"));
-        
-        repo.setCloneUrl(repoDto.getCloneUrl());
+
+        String normalizedName = RepoNameUtils.normalize(repoDto.getName(), repoDto.getCloneUrl());
+        if (!repo.getName().equalsIgnoreCase(normalizedName)
+                && repoRepository.existsByNameIgnoreCase(normalizedName)) {
+            throw new RuntimeException("Repository with this name already exists");
+        }
+
+        repo.setName(normalizedName);
+        repo.setCloneUrl(ensureCloneUrl(repoDto.getCloneUrl(), normalizedName));
         repo.setDefaultBranch(repoDto.getDefaultBranch());
         repo.setWebhookSecret(repoDto.getWebhookSecret());
         
@@ -75,5 +85,12 @@ public class RepoService {
         dto.setCreatedAt(repo.getCreatedAt());
         dto.setUpdatedAt(repo.getUpdatedAt());
         return dto;
+    }
+
+    private String ensureCloneUrl(String cloneUrl, String normalizedName) {
+        if (cloneUrl == null || cloneUrl.trim().isEmpty()) {
+            return "https://github.com/" + normalizedName + ".git";
+        }
+        return cloneUrl.trim();
     }
 }
