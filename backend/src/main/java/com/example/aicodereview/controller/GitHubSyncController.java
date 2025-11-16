@@ -87,11 +87,14 @@ public class GitHubSyncController {
     
     /**
      * Fetch and analyze a specific pull request
+     * Accept owner, repo and PR number as separate segments
      */
-    @PostMapping("/sync/{repoName:.+}/pr/{prNumber}")
-    public ResponseEntity<?> syncPullRequest(@PathVariable String repoName, 
-                                            @PathVariable int prNumber) {
-        logger.info("Manual sync requested for PR #{} in repository: {}", prNumber, repoName);
+    @PostMapping("/sync/{owner}/{repo}/pr/{prNumber}")
+    public ResponseEntity<?> syncPullRequestBySegments(@PathVariable String owner, 
+                                                       @PathVariable String repo,
+                                                       @PathVariable int prNumber) {
+        String repoName = owner + "/" + repo;
+        logger.info("Manual sync requested for PR #{} in repository: {} (segments)", prNumber, repoName);
         
         try {
             PullRequest pullRequest = gitHubApiService.fetchSinglePullRequest(repoName, prNumber);
@@ -172,6 +175,17 @@ public class GitHubSyncController {
         response.put("lastPollTime", pollingService.getLastPollTime());
         response.put("nextPollTime", pollingService.getNextPollTime());
         
+        return ResponseEntity.ok(response);
+    }
+    
+    /**
+     * Test endpoint
+     */
+    @PostMapping("/test/pr")
+    public ResponseEntity<?> testPr() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Test PR endpoint works");
         return ResponseEntity.ok(response);
     }
 }

@@ -37,7 +37,7 @@ public final class RepoNameUtils {
             throw new IllegalArgumentException("Repository name must be in the format owner/repository");
         }
 
-        return candidate.toLowerCase();
+        return candidate;
     }
 
     private static String extractCandidate(String name, String cloneUrl) {
