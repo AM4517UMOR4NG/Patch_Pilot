@@ -1,124 +1,395 @@
+<div align="center">
+
 # 🚀 Patch Pilot
 
-<div align="center">
-  <img src="https://img.shields.io/badge/Spring_Boot-3.x-green?style=for-the-badge&logo=spring" />
-  <img src="https://img.shields.io/badge/React-18-blue?style=for-the-badge&logo=react" />
-  <img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript" />
-  <img src="https://img.shields.io/badge/Java-17-red?style=for-the-badge&logo=java" />
+### *Your AI-Powered Code Review Companion*
+
+<p align="center">
+  <img src="https://img.shields.io/badge/version-1.0.0-blue?style=flat-square" alt="version" />
+  <img src="https://img.shields.io/badge/build-passing-brightgreen?style=flat-square" alt="build" />
+  <img src="https://img.shields.io/badge/license-Apache%202.0-orange?style=flat-square" alt="license" />
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?style=for-the-badge&logo=spring&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostgreSQL-15-316192?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
+</p>
+
+<h3>
+  <a href="#-quick-start">Quick Start</a>
+  <span> · </span>
+  <a href="#-features">Features</a>
+  <span> · </span>
+  <a href="#-documentation">Docs</a>
+  <span> · </span>
+  <a href="#-demo">Demo</a>
+</h3>
+
+<p align="center">
+  <i>Automatically analyze GitHub Pull Requests, detect security vulnerabilities, bugs, and code smells.<br/>
+  Get AI-powered recommendations and apply patches with a single click.</i>
+</p>
+
+<img src="https://user-images.githubusercontent.com/placeholder/demo.gif" alt="Patch Pilot Demo" width="100%" />
+
 </div>
-
-<br>
-
-> **AI-Powered Code Review & Automated Patch Application System**
-> 
-> Automatically analyze pull requests, detect issues, and apply fixes with AI-generated patches.
 
 ---
 
-## 🎯 Overview
+## � Why Patch Pilot?
 
-Patch Pilot is an intelligent code review system that integrates seamlessly with GitHub to provide automated code analysis and patch suggestions. Using advanced pattern recognition and AI capabilities, it helps development teams maintain code quality and consistency.
+<table>
+<tr>
+<td width="33%" valign="top">
 
-### ✨ Key Features
+### 🎯 Smart Analysis
+Automatically detect **security vulnerabilities**, **bugs**, and **code smells** in every pull request with advanced pattern recognition.
 
-- **🔍 Automated Code Analysis**: Instantly analyze pull requests when created
-- **🤖 AI-Powered Suggestions**: Generate intelligent patch suggestions for detected issues  
-- **⚡ One-Click Fixes**: Apply patches directly from the dashboard
-- **📊 Real-time Monitoring**: Track repository health and review metrics
-- **🔒 Secure Integration**: HMAC-verified GitHub webhooks
-- **🎨 Modern UI**: Beautiful, responsive interface built 
+</td>
+<td width="33%" valign="top">
+
+### ⚡ Lightning Fast
+Get analysis results in **seconds**, not hours. Real-time feedback helps developers fix issues before they merge.
+
+</td>
+<td width="33%" valign="top">
+
+### 🤖 AI-Powered
+Leverage OpenAI to generate **intelligent recommendations** and **automated fixes** for common issues.
+
+</td>
+</tr>
+</table>
+
+## ✨ Features
+
+<details open>
+<summary><b>🔍 Automated Code Analysis</b></summary>
+<br/>
+
+- ✅ Detect hardcoded credentials and API keys
+- ✅ Find SQL injection vulnerabilities
+- ✅ Identify deprecated method usage
+- ✅ Catch potential XSS vulnerabilities
+- ✅ Detect code smells and anti-patterns
+- ✅ Track performance issues
+
+</details>
+
+<details>
+<summary><b>🤖 AI-Powered Suggestions</b></summary>
+<br/>
+
+- 🧠 Generate intelligent patch suggestions
+- 📝 Context-aware recommendations
+- 🔧 Automated fix generation
+- 📚 Best practice suggestions
+- 🎯 Severity-based prioritization
+
+</details>
+
+<details>
+<summary><b>📊 Repository Monitoring</b></summary>
+<br/>
+
+- 📈 Real-time analysis dashboard
+- � Automatic PR polling
+- 📉 Code quality trends
+- 🎯 Issue tracking and resolution
+- 📱 Webhook integration
+
+</details>
+
+<details>
+<summary><b>🔒 Enterprise Security</b></summary>
+<br/>
+
+- � JWT-based authentication
+- 🔑 HMAC webhook verification
+- 🛡️ Role-based access control (RBAC)
+- 🔒 Secure credential storage
+- 📜 Audit logging
+
+</details> 
 
 ## 🏗️ Architecture
 
-### Backend Stack
-- **Framework**: Spring Boot 3.x
-- **Language**: Java 17+
-- **Database Options**:
-  - **PostgreSQL**: Recommended for production use
-  - **MySQL**: Alternative stable database option
-  - **SQLite**: Lightweight file-based option
-  - **H2**: In-memory for development/testing
-- **Security**: JWT authentication with Spring Security
-- **API Documentation**: Swagger/OpenAPI 3.0
+```mermaid
+graph TB
+    A[👤 User Browser] -->|HTTP/3000| B[⚡ Nginx Proxy]
+    B -->|Proxy /api/*| C[🚀 Spring Boot Backend]
+    C -->|JDBC| D[(🐘 PostgreSQL)]
+    C -->|REST API| E[🐙 GitHub API]
+    C -->|Clone & Analyze| F[💾 Workspace]
+    B -->|Static Files| G[⚛️ React Frontend]
+    
+    style A fill:#61DAFB,stroke:#333,stroke-width:2px
+    style B fill:#009639,stroke:#333,stroke-width:2px
+    style C fill:#6DB33F,stroke:#333,stroke-width:2px
+    style D fill:#316192,stroke:#333,stroke-width:2px
+    style E fill:#181717,stroke:#333,stroke-width:2px
+    style F fill:#FFD700,stroke:#333,stroke-width:2px
+    style G fill:#61DAFB,stroke:#333,stroke-width:2px
+```
 
-### Frontend Stack  
-- **Framework**: React 18 with TypeScript
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS
-- **State Management**: React Query (TanStack Query)
-- **Routing**: React Router v6
+<div align="center">
+
+### 🛠️ Tech Stack
+
+</div>
+
+<table>
+<tr>
+<td valign="top" width="50%">
+
+#### 🎨 **Frontend**
+
+| Technology | Purpose |
+|------------|---------|
+| ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black) | UI Framework |
+| ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript&logoColor=white) | Type Safety |
+| ![Vite](https://img.shields.io/badge/Vite-5.0-646CFF?logo=vite&logoColor=white) | Build Tool |
+| ![TailwindCSS](https://img.shields.io/badge/Tailwind-3.0-06B6D4?logo=tailwindcss&logoColor=white) | Styling |
+
+</td>
+<td valign="top" width="50%">
+
+#### ⚙️ **Backend**
+
+| Technology | Purpose |
+|------------|---------|
+| ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-6DB33F?logo=spring&logoColor=white) | Framework |
+| ![Java](https://img.shields.io/badge/Java-17-ED8B00?logo=openjdk&logoColor=white) | Language |
+| ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-316192?logo=postgresql&logoColor=white) | Database |
+| ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white) | Deployment |
+
+</td>
+</tr>
+</table>
+
+<div align="center">
+
+### 📦 Database Support
+
+| Database | Status | Use Case |
+|----------|--------|----------|
+| PostgreSQL | ✅ **Recommended** | Production & Large teams |
+| MySQL | ✅ Supported | Alternative production DB |
+| SQLite | ✅ Supported | Small teams & testing |
+| H2 | ✅ Supported | Development & testing |
+
+</div>
 
 ## 🚀 Quick Start
 
-### Prerequisites
+<div align="center">
 
-- Java 17 or higher
-- Node.js 18 or higher  
-- Docker Desktop (optional)
+### 🐳 One-Command Setup (Docker - Recommended)
+
+```bash
+docker-compose up --build
+```
+
+**That's it!** 🎉 Open http://localhost:3000 in your browser.
+
+</div>
+
+---
+
+### 📋 Prerequisites
+
+<table>
+<tr>
+<td>
+
+**For Docker Setup** ✅ *Easiest*
+- Docker Desktop 20.10+
+- 4GB RAM minimum
+- 10GB free disk space
+
+</td>
+<td>
+
+**For Manual Setup** 🛠️ *Advanced*
+- Java 17+ (OpenJDK recommended)
+- Node.js 18+ & npm 9+
+- PostgreSQL 15+ (or MySQL/SQLite)
 - Git
 
-### Installation
+</td>
+</tr>
+</table>
 
-1. **Clone the repository**
+---
+
+### 🐳 Docker Installation (Recommended)
+
+```bash
+# 1️⃣ Clone the repository
+git clone https://github.com/AM4517UMOR4NG/Patch-Pilot.git
+cd Patch-Pilot
+
+# 2️⃣ Create .env file (optional)
+cat > .env << EOF
+GITHUB_TOKEN=your_github_token_here
+OPENAI_API_KEY=your_openai_key_here
+EOF
+
+# 3️⃣ Start all services
+docker-compose up --build -d
+
+# 4️⃣ Check status
+docker-compose ps
+
+# 5️⃣ View logs
+docker-compose logs -f
+```
+
+<details>
+<summary>📊 <b>Docker Services Overview</b></summary>
+
+```bash
+SERVICE      PORT     STATUS
+────────────────────────────────────
+frontend     3000     ✅ Running
+backend      8080     ✅ Running
+database     5432     ✅ Running
+```
+
+</details>
+
+<details>
+<summary>🔧 <b>Docker Management Commands</b></summary>
+
+```bash
+# Stop services
+docker-compose down
+
+# Restart services
+docker-compose restart
+
+# View logs
+docker-compose logs backend
+docker-compose logs frontend
+
+# Clean up (removes volumes)
+docker-compose down -v
+
+# Rebuild specific service
+docker-compose up --build backend
+```
+
+</details>
+
+---
+
+### 💻 Manual Installation (Alternative)
+
+<details>
+<summary>Click to expand manual installation steps</summary>
+
+#### 1️⃣ Clone Repository
 ```bash
 git clone https://github.com/AM4517UMOR4NG/Patch-Pilot.git
 cd Patch-Pilot
 ```
 
-2. **Start the backend with your preferred database**
+#### 2️⃣ Setup Database
 
-#### Option A: PostgreSQL (Recommended)
-```bash
-cd backend
-java -jar target/ai-code-review-backend-1.0.0.jar --spring.profiles.active=prod
+<details>
+<summary><b>PostgreSQL Setup</b> (Recommended)</summary>
+
+```sql
+CREATE DATABASE aicodereview;
+CREATE USER postgres WITH PASSWORD 'postgres';
+GRANT ALL PRIVILEGES ON DATABASE aicodereview TO postgres;
 ```
 
-#### Option B: MySQL
 ```bash
-cd backend
-java -jar target/ai-code-review-backend-1.0.0.jar --spring.profiles.active=mysql
+# Update backend/src/main/resources/application.yml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/aicodereview
+    username: postgres
+    password: postgres
 ```
 
-#### Option C: SQLite
-```bash
-cd backend
-java -jar target/ai-code-review-backend-1.0.0.jar --spring.profiles.active=sqlite
+</details>
+
+<details>
+<summary><b>MySQL Setup</b></summary>
+
+```sql
+CREATE DATABASE aicodereview;
+CREATE USER 'aiuser'@'localhost' IDENTIFIED BY 'aipassword';
+GRANT ALL PRIVILEGES ON aicodereview.* TO 'aiuser'@'localhost';
 ```
 
-#### Option D: H2 (Development)
+</details>
+
+#### 3️⃣ Start Backend
 ```bash
 cd backend
-java -jar target/ai-code-review-backend-1.0.0.jar --spring.profiles.active=dev
+mvn clean install
+mvn spring-boot:run "-Dspring-boot.run.profiles=local"
 ```
 
-3. **Start the frontend**
+#### 4️⃣ Start Frontend
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-4. **Access the application**
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:8080
-- Swagger UI: http://localhost:8080/swagger-ui/index.html
-- H2 Console (if using H2): http://localhost:8080/h2-console
+#### 5️⃣ Access Application
+| Service | URL |
+|---------|-----|
+| 🌐 Frontend | http://localhost:3000 |
+| 🔧 Backend API | http://localhost:8080 |
+| 📚 API Docs | http://localhost:8080/swagger-ui.html |
 
-### Using Docker (Alternative)
+</details>
+
+---
+
+### ✅ Verification
+
+Test if everything is working:
 
 ```bash
-# PostgreSQL with Docker
-docker-compose -f docker-compose-postgres.yml up -d
+# Test backend health
+curl http://localhost:8080/actuator/health
 
-# MySQL with Docker
-docker-compose -f docker-compose-mysql.yml up -d
+# Expected: {"status":"UP"}
 
-# Build and run all services
-docker-compose up --build
+# Test frontend
+curl http://localhost:3000
 
-# Stop services
-docker-compose down
+# Expected: HTML content
 ```
+
+---
+
+### 🎯 First Steps
+
+1. **Open Frontend**: Navigate to http://localhost:3000
+2. **Paste PR URL**: Enter a GitHub PR URL like:
+   ```
+   https://github.com/facebook/react/pull/27000
+   ```
+3. **Click Analyze**: Wait ~30 seconds for analysis
+4. **View Results**: See files, findings, and recommendations!
+
+<div align="center">
+
+**Need help?** Check out [📚 Full Documentation](#-documentation) or [❓ Troubleshooting](#-troubleshooting)
+
+</div>
 
 ## 🔧 Configuration
 
@@ -188,79 +459,296 @@ APP_CORS_ALLOWED_ORIGINS=http://localhost:5173
 VITE_API_BASE_URL=http://localhost:8080/api
 ```
 
-## 📚 Usage Guide
+## 📚 Documentation
 
-### 1. Login
-- Navigate to http://localhost:5173
-- Use default credentials: `admin` / `password`
+<div align="center">
 
-### 2. Register a Repository
-- Click "Add Repository" on the dashboard
-- Enter repository name (e.g., `owner/repo-name`)
-- Provide the clone URL
-- Save the generated webhook secret
+| 📖 Document | Description |
+|-------------|-------------|
+| [API Documentation](API_DOCUMENTATION.md) | Complete REST API reference with examples |
+| [System Architecture](CARA_KERJA_SISTEM.md) | Detailed system flow (Bahasa Indonesia) |
+| [API Quick Reference](API_QUICK_REFERENCE.md) | Quick API endpoint cheat sheet |
+| [Setup Guide](SETUP_GUIDE.md) | Advanced configuration guide |
 
-### 3. Analyze GitHub Repository
-- Go to "GitHub Analyzer" in the navigation
-- Enter a GitHub repository URL (e.g., `https://github.com/owner/repo/pulls`)
-- Click "Analyze Pull Requests"
-- View detailed analysis of code changes
+</div>
 
-### 4. Configure GitHub Webhook
-- Go to your GitHub repository settings
-- Navigate to Webhooks → Add webhook
-- Set Payload URL: `http://your-domain/webhooks/github`
-- Content type: `application/json`
-- Secret: Use the webhook secret from step 2
-- Events: Select "Pull requests"
+---
 
-### 5. Automatic Analysis
-- When a PR is created/updated, Patch Pilot automatically analyzes the code
-- View findings and suggested patches in the dashboard
-- Apply patches with one click
+## 🎮 Demo
 
-## 🔌 API Documentation
+<div align="center">
 
-### Authentication
-```http
-POST /api/auth/login
-Content-Type: application/json
+### 🎬 See It In Action
 
-{
-  "username": "admin",
-  "password": "password"
-}
+<table>
+<tr>
+<td align="center" width="50%">
+
+**🔍 Code Analysis**
+
+<img src="https://via.placeholder.com/400x300/4CAF50/FFFFFF?text=Analyzing+PR" width="100%" />
+
+Real-time analysis of pull requests with severity indicators
+
+</td>
+<td align="center" width="50%">
+
+**📊 Dashboard View**
+
+<img src="https://via.placeholder.com/400x300/2196F3/FFFFFF?text=Dashboard" width="100%" />
+
+Beautiful dashboard showing findings and metrics
+
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+
+**🐛 Finding Details**
+
+<img src="https://via.placeholder.com/400x300/FF9800/FFFFFF?text=Findings" width="100%" />
+
+Detailed view of security issues and bugs
+
+</td>
+<td align="center" width="50%">
+
+**✨ AI Suggestions**
+
+<img src="https://via.placeholder.com/400x300/9C27B0/FFFFFF?text=Recommendations" width="100%" />
+
+AI-powered fix suggestions with explanations
+
+</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+## 🎯 Usage Guide
+
+### Step 1️⃣: Analyze a Pull Request
+
+```bash
+# Open frontend
+http://localhost:3000
+
+# Paste GitHub PR URL
+https://github.com/facebook/react/pull/27000
+
+# Click "Analyze PR" button
 ```
 
-### Repository Management
-```http
-GET /api/repos              # List all repositories
-POST /api/repos             # Register new repository
-GET /api/repos/{id}         # Get repository details
-DELETE /api/repos/{id}      # Remove repository
+### Step 2️⃣: View Results
+
+The system will show:
+- ✅ **Files Changed**: All modified files in the PR
+- 🐛 **Findings**: Detected issues with severity levels
+- 💡 **Recommendations**: AI-generated fix suggestions
+- 📊 **Metrics**: Code quality statistics
+
+### Step 3️⃣: Review Findings
+
+Each finding includes:
+- **Severity**: HIGH, MEDIUM, or LOW
+- **Category**: SECURITY, BUG, CODE_SMELL, etc.
+- **Location**: File path and line numbers
+- **Description**: What's wrong
+- **Suggestion**: How to fix it
+
+### Step 4️⃣: Apply Fixes (Optional)
+
+```bash
+# Download suggested patch
+# Apply manually or use git apply
+
+# Or copy the suggested code directly
 ```
 
-### GitHub Analysis
-```http
-POST /api/github/sync/{repoName}  # Analyze GitHub repository
+---
+
+## 🔌 API Examples
+
+### Analyze Pull Request
+
+```bash
+curl -X POST http://localhost:8080/api/github/sync/facebook/react/pr/27000
 ```
 
-### Pull Request & Analysis
-```http
-GET /api/pullrequests/{id}         # Get PR details
-GET /api/pullrequests/{id}/runs    # List analysis runs
-GET /api/runs/{id}                 # Get run details
-GET /api/runs/{id}/findings        # Get findings
-POST /api/patches/{id}/apply       # Apply patch
+### Get Analysis Results
+
+```bash
+# Get repositories
+curl http://localhost:8080/api/repos
+
+# Get pull requests
+curl http://localhost:8080/api/pullrequests/repo/1
+
+# Get analysis runs
+curl http://localhost:8080/api/runs/pull-request/1
 ```
 
-### Webhook Integration
-```http
-POST /webhooks/github
-X-Hub-Signature-256: sha256=...
+<details>
+<summary>📝 <b>See More API Examples</b></summary>
+
+```bash
+# Health check
+curl http://localhost:8080/actuator/health
+
+# Sync entire repository
+curl -X POST http://localhost:8080/api/github/sync/facebook/react
+
+# Get specific run
+curl http://localhost:8080/api/runs/1
+
+# Start polling
+curl -X POST http://localhost:8080/api/github/polling/start
+
+# Get polling status
+curl http://localhost:8080/api/github/polling/status
 ```
 
-Full API documentation: http://localhost:8080/swagger-ui/index.html
+Full API documentation: http://localhost:8080/swagger-ui.html
+
+</details>
+
+## ❓ Troubleshooting
+
+<details>
+<summary>🔴 <b>Backend Health is DOWN</b></summary>
+
+```bash
+# Check backend logs
+docker-compose logs backend --tail 50
+
+# Check database connection
+docker exec patch_pilot-db-1 psql -U postgres -d aicodereview -c "SELECT 1;"
+
+# Restart backend
+docker-compose restart backend
+```
+
+</details>
+
+<details>
+<summary>⚠️ <b>404 Error on API Calls</b></summary>
+
+```bash
+# Verify nginx proxy config
+docker exec patch_pilot-frontend-1 cat /etc/nginx/nginx.conf
+
+# Test backend directly
+curl http://localhost:8080/api/actuator/health
+
+# Test via nginx
+curl http://localhost:3000/api/actuator/health
+```
+
+</details>
+
+<details>
+<summary>🐙 <b>GitHub API 404 - Repository Not Found</b></summary>
+
+The repository might be:
+- **Private**: Set `GITHUB_TOKEN` environment variable
+- **Wrong name**: Verify exact owner/repo spelling (case-sensitive!)
+- **Deleted**: Repository no longer exists
+
+```bash
+# Test if repo exists
+curl https://api.github.com/repos/owner/repo
+
+# For private repos, set token
+echo "GITHUB_TOKEN=your_token_here" >> .env
+docker-compose up --build
+```
+
+</details>
+
+<details>
+<summary>⏳ <b>Analysis Stuck in PENDING</b></summary>
+
+```bash
+# Check runner service logs
+docker-compose logs backend | grep -i "runner\|analysis"
+
+# Check workspace directory
+docker exec patch_pilot-backend-1 ls -la /tmp/patch-pilot-workspace
+
+# Restart backend
+docker-compose restart backend
+```
+
+</details>
+
+<details>
+<summary>🔑 <b>Rate Limit Exceeded</b></summary>
+
+GitHub API has rate limits:
+- **Without token**: 60 requests/hour
+- **With token**: 5000 requests/hour
+
+**Solution**: Add GitHub token to `.env`:
+```bash
+GITHUB_TOKEN=ghp_your_token_here
+```
+
+Check your rate limit:
+```bash
+curl https://api.github.com/rate_limit
+```
+
+</details>
+
+---
+
+## 🌐 Environment Variables
+
+<details>
+<summary>📝 <b>Complete Environment Configuration</b></summary>
+
+### Backend Variables
+
+```env
+# Database Configuration
+DATABASE_URL=jdbc:postgresql://db:5432/aicodereview
+DATABASE_USER=postgres
+DATABASE_PASSWORD=postgres
+
+# GitHub Integration (Required for private repos)
+GITHUB_TOKEN=ghp_your_github_personal_access_token
+
+# AI Analysis (Optional)
+OPENAI_API_KEY=sk-your_openai_api_key
+
+# Spring Profile
+SPRING_PROFILES_ACTIVE=local
+
+# CORS Configuration
+APP_CORS_ALLOWED_ORIGINS=http://localhost:3000
+
+# Workspace Directory
+WORKSPACE_DIR=/tmp/patch-pilot-workspace
+
+# Polling Configuration
+POLLING_ENABLED=false
+POLLING_INTERVAL_MINUTES=30
+
+# Analysis Configuration
+ANALYSIS_MAX_FILES=50
+ANALYSIS_FILE_EXTENSIONS=.java,.js,.ts,.jsx,.tsx,.py,.go
+```
+
+### Frontend Variables
+
+```env
+# API Base URL
+VITE_API_BASE_URL=/api
+```
+
+</details>
 
 ## 🛡️ Security
 
@@ -361,60 +849,223 @@ npm run coverage
 - [ ] Configure backup strategy
 - [ ] Implement CI/CD pipeline
 
+---
+
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+<div align="center">
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+**We love your input!** We want to make contributing as easy and transparent as possible.
 
-### Development Guidelines
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![GitHub Issues](https://img.shields.io/github/issues/AM4517UMOR4NG/Patch-Pilot?style=flat-square)](https://github.com/AM4517UMOR4NG/Patch-Pilot/issues)
+[![GitHub Stars](https://img.shields.io/github/stars/AM4517UMOR4NG/Patch-Pilot?style=flat-square)](https://github.com/AM4517UMOR4NG/Patch-Pilot/stargazers)
 
-- Follow existing code style
-- Add tests for new features
-- Update documentation
-- Ensure all tests pass
+</div>
 
-## 📧 Contact
+### 🚀 How to Contribute
 
-**Developer**: aekmohop@gmail.com
+<table>
+<tr>
+<td>
 
-**Project Link**: [https://github.com/AM4517UMOR4NG/Patch-Pilot](https://github.com/AM4517UMOR4NG/Patch-Pilot)
+**1. Fork & Clone**
+```bash
+git clone https://github.com/YOUR_USERNAME/Patch-Pilot.git
+cd Patch-Pilot
+```
+
+</td>
+<td>
+
+**2. Create Branch**
+```bash
+git checkout -b feature/amazing-feature
+```
+
+</td>
+</tr>
+<tr>
+<td>
+
+**3. Make Changes**
+```bash
+# Write your code
+# Add tests
+# Update docs
+```
+
+</td>
+<td>
+
+**4. Commit & Push**
+```bash
+git commit -m '✨ Add amazing feature'
+git push origin feature/amazing-feature
+```
+
+</td>
+</tr>
+</table>
+
+**5. Open a Pull Request** 🎉
+
+### 📋 Development Guidelines
+
+- ✅ Follow existing code style
+- ✅ Write tests for new features
+- ✅ Update documentation
+- ✅ Ensure all tests pass
+- ✅ Keep PRs focused and small
+- ✅ Use meaningful commit messages
+
+### 🐛 Found a Bug?
+
+Open an issue with:
+- Clear bug description
+- Steps to reproduce
+- Expected vs actual behavior
+- Screenshots (if applicable)
+
+---
+
+## � Community & Support
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center">
+<a href="https://github.com/AM4517UMOR4NG/Patch-Pilot/issues">
+<img src="https://img.shields.io/badge/GitHub-Issues-181717?style=for-the-badge&logo=github&logoColor=white" />
+</a>
+<br/>
+<sub>Report Bugs</sub>
+</td>
+<td align="center">
+<a href="https://github.com/AM4517UMOR4NG/Patch-Pilot/discussions">
+<img src="https://img.shields.io/badge/GitHub-Discussions-181717?style=for-the-badge&logo=github&logoColor=white" />
+</a>
+<br/>
+<sub>Ask Questions</sub>
+</td>
+<td align="center">
+<a href="mailto:aekmohop@gmail.com">
+<img src="https://img.shields.io/badge/Email-Contact-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
+</a>
+<br/>
+<sub>Direct Contact</sub>
+</td>
+</tr>
+</table>
+
+**Developer**: [@AM4517UMOR4NG](https://github.com/AM4517UMOR4NG)  
+**Email**: aekmohop@gmail.com
+
+</div>
+
+---
+
+## 📊 Project Stats
+
+<div align="center">
+
+![GitHub repo size](https://img.shields.io/github/repo-size/AM4517UMOR4NG/Patch-Pilot?style=flat-square)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/AM4517UMOR4NG/Patch-Pilot?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/AM4517UMOR4NG/Patch-Pilot?style=flat-square)
+
+</div>
+
+---
 
 ## 📄 License
 
-This project is licensed under the Apache-2.0 license - see the [LICENSE](LICENSE) file for details.
+<div align="center">
+
+This project is licensed under the **Apache License 2.0**
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge)](LICENSE)
+
+See [LICENSE](LICENSE) file for details.
+
+</div>
+
+---
 
 ## 🙏 Acknowledgments
 
-- Spring Boot community
-- React community
-- All contributors and testers
+Special thanks to:
+
+- 🍃 **Spring Boot Community** - For the amazing framework
+- ⚛️ **React Team** - For the powerful UI library
+- 🐙 **GitHub** - For the comprehensive API
+- 🤖 **OpenAI** - For AI capabilities
+- 👥 **All Contributors** - For making this project better
 
 ---
 
-## 🆕 Recent Updates
+## ⭐ Star History
 
-### New Features
-- **Multiple Database Support**: Added support for PostgreSQL, MySQL, and SQLite
-- **Direct GitHub API Integration**: Fallback mode when backend is unavailable
-- **Enhanced GitHub Analyzer**: Detailed analysis of pull requests with file-level insights
-- **Improved Error Handling**: Better error messages and recovery mechanisms
-- **Standalone Analyzer**: Added direct-analyzer.html for quick testing without backend
+<div align="center">
 
-### Bug Fixes
-- Fixed authentication issues with H2 database
-- Resolved CORS problems with frontend-backend communication
-- Improved error handling in GitHub API integration
-- Enhanced database initialization for better reliability
+[![Star History Chart](https://api.star-history.com/svg?repos=AM4517UMOR4NG/Patch-Pilot&type=Date)](https://star-history.com/#AM4517UMOR4NG/Patch-Pilot&Date)
 
-### Documentation
-- Added detailed setup guides for different databases
+If you find this project useful, please consider giving it a ⭐ star!
+
+</div>
+
+---
+
+## 🆕 Changelog
+
+### v1.0.0 (Latest)
+
+#### ✨ New Features
+- 🎯 **GitHub PR Analysis**: Paste any PR URL for instant analysis
+- 🤖 **AI-Powered Recommendations**: Intelligent fix suggestions
+- 🔍 **Security Scanning**: Detect vulnerabilities automatically
+- 📊 **Real-time Dashboard**: Beautiful UI with live updates
+- 🐳 **Docker Support**: One-command deployment
+- 📚 **Comprehensive API**: RESTful API with OpenAPI docs
+
+#### 🐛 Bug Fixes
+- Fixed case sensitivity in repository names
+- Improved nginx proxy configuration
+- Enhanced error handling in GitHub API calls
+- Better database connection management
+
+#### 📖 Documentation
+- Added complete API documentation
+- Created system architecture guide (ID)
 - Improved troubleshooting section
-- Added migration guides between database systems
-- Updated deployment recommendations
+- Added quick reference guide
 
 ---
+
+<div align="center">
+
+### 🚀 Ready to Get Started?
+
+<a href="#-quick-start">
+<img src="https://img.shields.io/badge/Get%20Started-4CAF50?style=for-the-badge&logo=rocket&logoColor=white" />
+</a>
+<a href="API_DOCUMENTATION.md">
+<img src="https://img.shields.io/badge/Read%20Docs-2196F3?style=for-the-badge&logo=readthedocs&logoColor=white" />
+</a>
+<a href="https://github.com/AM4517UMOR4NG/Patch-Pilot/issues/new">
+<img src="https://img.shields.io/badge/Report%20Bug-F44336?style=for-the-badge&logo=bug&logoColor=white" />
+</a>
+
+<br/><br/>
+
+Made with ❤️ by [@AM4517UMOR4NG](https://github.com/AM4517UMOR4NG)
+
+**Patch Pilot** - *Your AI-Powered Code Review Companion*
+
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AM4517UMOR4NG/Patch-Pilot)
+
+---
+
+**© 2025 Patch Pilot. All rights reserved.**
+
+</div>
