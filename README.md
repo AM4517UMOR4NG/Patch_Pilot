@@ -26,14 +26,18 @@ Patch Pilot is an intelligent code review system that integrates seamlessly with
 - **⚡ One-Click Fixes**: Apply patches directly from the dashboard
 - **📊 Real-time Monitoring**: Track repository health and review metrics
 - **🔒 Secure Integration**: HMAC-verified GitHub webhooks
-- **🎨 Modern UI**: Beautiful, responsive interface built with React and Tailwind CSS
+- **🎨 Modern UI**: Beautiful, responsive interface built 
 
 ## 🏗️ Architecture
 
 ### Backend Stack
 - **Framework**: Spring Boot 3.x
 - **Language**: Java 17+
-- **Database**: PostgreSQL (production) / H2 (development)
+- **Database Options**:
+  - **PostgreSQL**: Recommended for production use
+  - **MySQL**: Alternative stable database option
+  - **SQLite**: Lightweight file-based option
+  - **H2**: In-memory for development/testing
 - **Security**: JWT authentication with Spring Security
 - **API Documentation**: Swagger/OpenAPI 3.0
 
@@ -61,10 +65,30 @@ git clone https://github.com/AM4517UMOR4NG/Patch-Pilot.git
 cd Patch-Pilot
 ```
 
-2. **Start the backend**
+2. **Start the backend with your preferred database**
+
+#### Option A: PostgreSQL (Recommended)
 ```bash
 cd backend
-java -jar target/ai-code-review-backend-1.0.0.jar --spring.profiles.active=h2
+java -jar target/ai-code-review-backend-1.0.0.jar --spring.profiles.active=prod
+```
+
+#### Option B: MySQL
+```bash
+cd backend
+java -jar target/ai-code-review-backend-1.0.0.jar --spring.profiles.active=mysql
+```
+
+#### Option C: SQLite
+```bash
+cd backend
+java -jar target/ai-code-review-backend-1.0.0.jar --spring.profiles.active=sqlite
+```
+
+#### Option D: H2 (Development)
+```bash
+cd backend
+java -jar target/ai-code-review-backend-1.0.0.jar --spring.profiles.active=dev
 ```
 
 3. **Start the frontend**
@@ -78,10 +102,17 @@ npm run dev
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:8080
 - Swagger UI: http://localhost:8080/swagger-ui/index.html
+- H2 Console (if using H2): http://localhost:8080/h2-console
 
 ### Using Docker (Alternative)
 
 ```bash
+# PostgreSQL with Docker
+docker-compose -f docker-compose-postgres.yml up -d
+
+# MySQL with Docker
+docker-compose -f docker-compose-mysql.yml up -d
+
 # Build and run all services
 docker-compose up --build
 
@@ -91,13 +122,56 @@ docker-compose down
 
 ## 🔧 Configuration
 
+### Database Setup
+
+#### PostgreSQL Setup
+1. Create database and user:
+```sql
+CREATE DATABASE patchpilot;
+CREATE USER patchpilot WITH PASSWORD 'your-password';
+GRANT ALL PRIVILEGES ON DATABASE patchpilot TO patchpilot;
+```
+
+2. Run the initialization script:
+```bash
+psql -U postgres -d patchpilot -f postgres-setup.sql
+```
+
+#### MySQL Setup
+1. Create database and user:
+```sql
+CREATE DATABASE patchpilot;
+CREATE USER 'patchpilot'@'localhost' IDENTIFIED BY 'your-password';
+GRANT ALL PRIVILEGES ON patchpilot.* TO 'patchpilot'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+2. Run the initialization script:
+```bash
+mysql -u root -p patchpilot < mysql-setup.sql
+```
+
+#### SQLite Setup
+The SQLite database will be automatically created at `./data/patchpilot.db` when using the SQLite profile.
+
+#### H2 Setup
+For H2, you can use the H2 Console at http://localhost:8080/h2-console with:
+- JDBC URL: `jdbc:h2:mem:testdb` (in-memory) or `jdbc:h2:file:./data/patchpilot` (file)
+- Username: `sa`
+- Password: (empty)
+
 ### Environment Variables
 
 #### Backend
 ```env
-# Database
+# Database (PostgreSQL)
 DATABASE_URL=jdbc:postgresql://localhost:5432/patchpilot
 DATABASE_USER=postgres
+DATABASE_PASSWORD=your-password
+
+# Database (MySQL)
+DATABASE_URL=jdbc:mysql://localhost:3306/patchpilot
+DATABASE_USER=patchpilot
 DATABASE_PASSWORD=your-password
 
 # Security
@@ -126,7 +200,13 @@ VITE_API_BASE_URL=http://localhost:8080/api
 - Provide the clone URL
 - Save the generated webhook secret
 
-### 3. Configure GitHub Webhook
+### 3. Analyze GitHub Repository
+- Go to "GitHub Analyzer" in the navigation
+- Enter a GitHub repository URL (e.g., `https://github.com/owner/repo/pulls`)
+- Click "Analyze Pull Requests"
+- View detailed analysis of code changes
+
+### 4. Configure GitHub Webhook
 - Go to your GitHub repository settings
 - Navigate to Webhooks → Add webhook
 - Set Payload URL: `http://your-domain/webhooks/github`
@@ -134,7 +214,7 @@ VITE_API_BASE_URL=http://localhost:8080/api
 - Secret: Use the webhook secret from step 2
 - Events: Select "Pull requests"
 
-### 4. Automatic Analysis
+### 5. Automatic Analysis
 - When a PR is created/updated, Patch Pilot automatically analyzes the code
 - View findings and suggested patches in the dashboard
 - Apply patches with one click
@@ -158,6 +238,11 @@ GET /api/repos              # List all repositories
 POST /api/repos             # Register new repository
 GET /api/repos/{id}         # Get repository details
 DELETE /api/repos/{id}      # Remove repository
+```
+
+### GitHub Analysis
+```http
+POST /api/github/sync/{repoName}  # Analyze GitHub repository
 ```
 
 ### Pull Request & Analysis
@@ -224,6 +309,11 @@ Patch-Pilot/
 ├── docs/                  # Documentation
 │   └── examples/         # Sample payloads
 ├── docker-compose.yml    # Docker configuration
+├── docker-compose-postgres.yml  # PostgreSQL Docker config
+├── docker-compose-mysql.yml     # MySQL Docker config
+├── postgres-setup.sql    # PostgreSQL setup script
+├── mysql-setup.sql       # MySQL setup script
+├── direct-analyzer.html  # Standalone analyzer
 └── README.md            # This file
 ```
 
@@ -303,5 +393,28 @@ This project is licensed under the Apache-2.0 license - see the [LICENSE](LICENS
 - Spring Boot community
 - React community
 - All contributors and testers
+
+---
+
+## 🆕 Recent Updates
+
+### New Features
+- **Multiple Database Support**: Added support for PostgreSQL, MySQL, and SQLite
+- **Direct GitHub API Integration**: Fallback mode when backend is unavailable
+- **Enhanced GitHub Analyzer**: Detailed analysis of pull requests with file-level insights
+- **Improved Error Handling**: Better error messages and recovery mechanisms
+- **Standalone Analyzer**: Added direct-analyzer.html for quick testing without backend
+
+### Bug Fixes
+- Fixed authentication issues with H2 database
+- Resolved CORS problems with frontend-backend communication
+- Improved error handling in GitHub API integration
+- Enhanced database initialization for better reliability
+
+### Documentation
+- Added detailed setup guides for different databases
+- Improved troubleshooting section
+- Added migration guides between database systems
+- Updated deployment recommendations
 
 ---
