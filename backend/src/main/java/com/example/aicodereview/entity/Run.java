@@ -30,6 +30,7 @@ public class Run {
 
     private String commitSha;
     private String triggeredBy;
+    private LocalDateTime createdAt;
     private LocalDateTime startedAt;
     private LocalDateTime completedAt;
     private String errorMessage;
@@ -39,7 +40,7 @@ public class Run {
 
     @PrePersist
     protected void onCreate() {
-        startedAt = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
         if (status == null) {
             status = RunStatus.PENDING;
         }
