@@ -1058,7 +1058,7 @@ If you find this project useful, please consider giving it a ⭐ star!
 
 <br/><br/>
 
-Made with ❤️ by [@AM4517UMOR4NG](https://github.com/AM4517UMOR4NG)
+Made with  by [@AM4517UMOR4NG](https://github.com/AM4517UMOR4NG)
 
 **Patch Pilot** - *Your AI-Powered Code Review Companion*
 
