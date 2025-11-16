@@ -7,6 +7,7 @@ import com.example.aicodereview.entity.enums.RunStatus;
 import com.example.aicodereview.repository.PullRequestRepository;
 import com.example.aicodereview.repository.RepoRepository;
 import com.example.aicodereview.repository.RunRepository;
+import com.example.aicodereview.util.RepoNameUtils;
 import com.example.aicodereview.util.SignatureVerifier;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -61,8 +62,14 @@ public class WebhookService {
 
     private void processPullRequest(JsonNode json) {
         String repoName = json.path("repository").path("full_name").asText();
-        Repo repo = repoRepository.findByName(repoName)
-                .orElseThrow(() -> new RuntimeException("Repository not registered: " + repoName));
+        String normalizedRepoName = RepoNameUtils.normalize(repoName);
+        String cloneUrl = json.path("repository").path("clone_url").asText(null);
+        Repo repo = repoRepository.findByNameIgnoreCase(normalizedRepoName)
+                .orElseGet(() -> registerRepository(normalizedRepoName, cloneUrl));
+        if (!normalizedRepoName.equals(repo.getName())) {
+            repo.setName(normalizedRepoName);
+            repoRepository.save(repo);
+        }
 
         JsonNode prNode = json.path("pull_request");
         Integer prNumber = prNode.path("number").asInt();
@@ -97,5 +104,16 @@ public class WebhookService {
         pr.setRepo(repo);
         pr.setPrNumber(prNode.path("number").asInt());
         return pr;
+    }
+    
+    private Repo registerRepository(String normalizedRepoName, String cloneUrl) {
+        Repo repo = new Repo();
+        repo.setName(normalizedRepoName);
+        if (cloneUrl != null && !cloneUrl.isEmpty()) {
+            repo.setCloneUrl(cloneUrl);
+        } else {
+            repo.setCloneUrl("https://github.com/" + normalizedRepoName + ".git");
+        }
+        return repoRepository.save(repo);
     }
 }
