@@ -56,3 +56,23 @@ logs/
 temp/
 run-*.bat
 run-*.ps1
+
+# Server runtime logs
+server.err
+server.out
+
+# Java / Maven (generic)
+**/target/
+*.class
+*.hprof
+
+# Node / React (generic)
+**/.next/
+**/.turbo/
+**/.cache/
+*.tsbuildinfo
+
+# Coverage / reports
+coverage/
+backend/coverage/
+**/report.xml
