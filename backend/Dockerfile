@@ -16,9 +16,15 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
+# Install git for repository cloning
+RUN apk add --no-cache git
+
 # Create non-root user
 RUN addgroup -g 1000 spring && \
     adduser -D -s /bin/sh -u 1000 -G spring spring
+
+# Create workspace directory with proper permissions
+RUN mkdir -p /app/workspace && chown -R spring:spring /app/workspace
 
 # Copy JAR from build stage
 COPY --from=build /app/target/*.jar app.jar
