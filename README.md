@@ -43,6 +43,21 @@
 
 ---
 
+## 📋 Table of Contents
+
+1. [Why Patch Pilot?](#-why-patch-pilot-v20)
+2. [Features](#-features)
+3. [Prerequisites](#-prerequisites)
+4. [Quick Start with Docker](#-quick-start-with-docker-recommended)
+5. [Manual Setup](#-manual-setup-development)
+6. [Usage Guide](#-usage-guide)
+7. [Configuration](#-configuration)
+8. [Troubleshooting](#-troubleshooting)
+9. [Architecture](#-architecture)
+10. [Contributing](#-contributing)
+
+---
+
 ## 🔮 Why Patch Pilot v2.0?
 
 <table>
