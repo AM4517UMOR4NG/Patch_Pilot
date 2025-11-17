@@ -96,9 +96,8 @@ public class AdvancedAnalysisController {
             Repo repo = repoRepository.findByName(fullRepoName).orElseGet(() -> {
                 Repo newRepo = new Repo();
                 newRepo.setName(fullRepoName);
-                // Note: owner and url fields might not exist in Repo entity
-                // newRepo.setOwner(owner);
-                // newRepo.setUrl("https://github.com/" + fullRepoName);
+                newRepo.setCloneUrl("https://github.com/" + fullRepoName + ".git");
+                newRepo.setDefaultBranch("main");
                 return repoRepository.save(newRepo);
             });
             
