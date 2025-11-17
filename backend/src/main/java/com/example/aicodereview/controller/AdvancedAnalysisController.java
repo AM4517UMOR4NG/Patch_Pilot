@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 
@@ -113,20 +114,24 @@ public class AdvancedAnalysisController {
             
             // Step 4: Clone repository
             response.put("status", "cloning");
-            response.put("message", "Cloning repository...");
+            response.put("message", "Cloning repository from GitHub...");
             
             Path workspacePath = null;
             try {
+                logger.info("Starting repository clone for: {}/{}", owner, repoName);
+                
                 if (isRepoAnalysis) {
                     // Clone the entire repository (main branch)
-                    workspacePath = gitCloneService.clonePullRequest(
-                        owner, 
-                        repoName, 
-                        "main", 
-                        0
-                    );
+                    logger.info("Cloning full repository - attempting main branch");
+                    try {
+                        workspacePath = gitCloneService.cloneRepository(owner, repoName, "main");
+                    } catch (Exception e) {
+                        logger.warn("Failed with main branch, trying master: {}", e.getMessage());
+                        workspacePath = gitCloneService.cloneRepository(owner, repoName, "master");
+                    }
                 } else {
                     // Clone the pull request branch
+                    logger.info("Cloning PR branch: {}", pr.getSourceBranch());
                     workspacePath = gitCloneService.clonePullRequest(
                         owner, 
                         repoName, 
@@ -136,21 +141,47 @@ public class AdvancedAnalysisController {
                 }
                 logger.info("Repository cloned successfully to: {}", workspacePath);
                 
+                // Verify the workspace exists and has files
+                if (!Files.exists(workspacePath)) {
+                    throw new RuntimeException("Workspace path does not exist after clone");
+                }
+                
+                long fileCount = Files.walk(workspacePath)
+                    .filter(Files::isRegularFile)
+                    .filter(p -> !p.toString().contains(".git"))
+                    .count();
+                    
+                logger.info("Found {} files in cloned repository", fileCount);
+                if (fileCount == 0) {
+                    throw new RuntimeException("No files found in cloned repository");
+                }
+                
                 // Step 5: Perform advanced analysis
                 response.put("status", "analyzing");
-                response.put("message", "Performing deep code analysis...");
+                response.put("message", "Performing deep code analysis on " + fileCount + " files...");
                 
                 advancedAnalysisService.performAdvancedAnalysis(run, workspacePath);
                 
             } catch (Exception cloneEx) {
-                logger.error("Failed to clone repository: {}", cloneEx.getMessage());
-                // Create mock findings if clone fails
-                createMockFindings(run, fullRepoName);
+                logger.error("Failed to clone/analyze repository: {}", cloneEx.getMessage(), cloneEx);
+                // Update run status to FAILED
+                run.setStatus(RunStatus.FAILED);
+                run.setCompletedAt(LocalDateTime.now());
+                runRepository.save(run);
+                
+                // Return error response - NO MOCK DATA!
+                return ResponseEntity.status(500).body(Map.of(
+                    "success", false,
+                    "error", "Failed to clone repository: " + cloneEx.getMessage(),
+                    "details", "Please ensure the repository exists and is public. Error: " + cloneEx.toString()
+                ));
             } finally {
                 // Clean up workspace
                 if (workspacePath != null) {
                     try {
-                        gitCloneService.cleanupWorkspace(workspacePath);
+                        // Don't cleanup immediately - leave for debugging
+                        logger.info("Workspace preserved at: {}", workspacePath);
+                        // gitCloneService.cleanupWorkspace(workspacePath);
                     } catch (Exception e) {
                         logger.warn("Failed to cleanup workspace: {}", e.getMessage());
                     }
@@ -386,14 +417,6 @@ public class AdvancedAnalysisController {
         return summary.toString();
     }
     
-    /**
-     * Create mock findings when repository clone fails
-     */
-    private void createMockFindings(Run run, String repoName) {
-        logger.info("Creating mock findings for demonstration purposes");
-        // This creates sample findings so the UI still shows something
-        // In production, you'd want to handle this differently
-    }
     
     // Request DTO
     public static class AnalysisRequest {
