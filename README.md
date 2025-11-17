@@ -1,14 +1,15 @@
 <div align="center">
 
-# 🚀 Patch Pilot
+# 🚀 Patch Pilot -  AI Code Analysis Platform
 
-### *Your AI-Powered Code Review Companion*
+### *🔥 NOW SUPPORTS FULL REPOSITORY ANALYSIS! 🔥*
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.0-blue?style=flat-square" alt="version" />
+  <img src="https://img.shields.io/badge/version-2.0.0-blue?style=flat-square" alt="version" />
   <img src="https://img.shields.io/badge/build-passing-brightgreen?style=flat-square" alt="build" />
   <img src="https://img.shields.io/badge/license-Apache%202.0-orange?style=flat-square" alt="license" />
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs" />
+  <img src="https://img.shields.io/badge/AI-Powered-purple?style=flat-square" alt="AI" />
 </p>
 
 <p align="center">
@@ -31,8 +32,9 @@
 </h3>
 
 <p align="center">
-  <i>Automatically analyze GitHub Pull Requests, detect security vulnerabilities, bugs, and code smells.<br/>
-  Get AI-powered recommendations and apply patches with a single click.</i>
+  <i><b>🆕 Analyze ENTIRE REPOSITORIES or Pull Requests!</b><br/>
+  Detect security vulnerabilities, performance bottlenecks, architecture issues, and code quality problems.<br/>
+  Get AI-powered insights with our advanced ML-inspired pattern detection engine.</i>
 </p>
 
 <img src="https://user-images.githubusercontent.com/placeholder/demo.gif" alt="Patch Pilot Demo" width="100%" />
@@ -41,63 +43,113 @@
 
 ---
 
-## � Why Patch Pilot?
+## 🔮 Why Patch Pilot v2.0?
 
 <table>
 <tr>
-<td width="33%" valign="top">
+<td width="25%" valign="top">
 
-### 🎯 Smart Analysis
-Automatically detect **security vulnerabilities**, **bugs**, and **code smells** in every pull request with advanced pattern recognition.
+### 🎯 Repository & PR Analysis
+Analyze **entire repositories** or **pull requests**. Just paste any GitHub URL and get instant insights!
 
 </td>
-<td width="33%" valign="top">
+<td width="25%" valign="top">
+
+### 🧠 Advanced AI Engine
+Super-powered analysis with **AI insights**, **architecture patterns**, and **cognitive complexity** detection.
+
+</td>
+<td width="25%" valign="top">
+
+### 📊 AI Insights Dashboard
+Beautiful **real-time dashboard** with code health metrics, trends, and AI recommendations.
+
+</td>
+<td width="25%" valign="top">
 
 ### ⚡ Lightning Fast
-Get analysis results in **seconds**, not hours. Real-time feedback helps developers fix issues before they merge.
-
-</td>
-<td width="33%" valign="top">
-
-### 🤖 AI-Powered
-Leverage OpenAI to generate **intelligent recommendations** and **automated fixes** for common issues.
+Optimized for speed with **parallel analysis**, smart caching, and incremental scanning.
 
 </td>
 </tr>
 </table>
 
-## ✨ Features
+## ✨ New Features in v2.0
+
+### 🎉 **MAJOR UPDATE**: Full Repository Analysis
+- 🆕 **Analyze entire GitHub repositories** - not just PRs!
+- 🆕 **Smart URL detection** - automatically detects repository vs PR URLs
+- 🆕 **Recent analysis history** - quickly re-analyze previous repos
+
+### 🧠 **AI-Powered Insights Dashboard**
+- 📊 **Code Health Metrics** - Real-time visualization of code quality
+- 📈 **Trend Analysis** - Track quality improvements over time
+- 🎯 **Smart Recommendations** - AI-prioritized action items
+- 🔥 **Language Distribution** - See your tech stack at a glance
+
+### 🚀 **Enhanced Analysis Engine**
 
 <details open>
-<summary><b>🔍 Automated Code Analysis</b></summary>
-<br/>
+<summary><b>🔒 Security Analysis (30+ patterns)</b></summary>
 
-- ✅ Detect hardcoded credentials and API keys
-- ✅ Find SQL injection vulnerabilities
-- ✅ Identify deprecated method usage
-- ✅ Catch potential XSS vulnerabilities
-- ✅ Detect code smells and anti-patterns
-- ✅ Track performance issues
-
-</details>
-
-<details>
-<summary><b>🤖 AI-Powered Suggestions</b></summary>
-<br/>
-
-- 🧠 Generate intelligent patch suggestions
-- 📝 Context-aware recommendations
-- 🔧 Automated fix generation
-- 📚 Best practice suggestions
-- 🎯 Severity-based prioritization
+- ✅ Hardcoded secrets & API keys detection
+- ✅ SQL injection vulnerabilities
+- ✅ XSS (Cross-Site Scripting) risks
+- ✅ Command injection detection
+- ✅ Path traversal vulnerabilities
+- ✅ XXE (XML External Entity) attacks
+- ✅ Weak cryptography usage
+- ✅ Insecure random number generation
+- ✅ SSRF vulnerabilities
+- ✅ Open redirect detection
 
 </details>
 
 <details>
-<summary><b>📊 Repository Monitoring</b></summary>
-<br/>
+<summary><b>⚡ Performance Analysis</b></summary>
 
-- 📈 Real-time analysis dashboard
+- 🎯 N+1 query detection
+- 🎯 Memory leak identification
+- 🎯 Inefficient loop patterns
+- 🎯 Synchronous I/O in async contexts
+- 🎯 Unbounded cache growth
+- 🎯 Blocking operations detection
+
+</details>
+
+<details>
+<summary><b>🏗️ Architecture Analysis (NEW!)</b></summary>
+
+- 🏛️ Tight coupling detection
+- 🏛️ Missing dependency injection patterns
+- 🏛️ Circular dependency risks
+- 🏛️ God class anti-patterns
+- 🏛️ Long method detection
+- 🏛️ Deep nesting analysis
+
+</details>
+
+<details>
+<summary><b>🤖 AI Insights (NEW!)</b></summary>
+
+- 🧠 Memory optimization opportunities
+- 🧠 Missing data validation
+- 🧠 Async/await pattern suggestions
+- 🧠 Resource cleanup detection
+- 🧠 Context-aware code improvements
+- 🧠 Cognitive complexity analysis
+
+</details>
+
+<details>
+<summary><b>📊 Code Quality Metrics</b></summary>
+
+- 📈 Cyclomatic complexity calculation
+- 📈 Cognitive complexity scoring
+- 📈 Code duplication detection
+- 📈 Magic number identification
+- 📈 TODO/FIXME tracking
+- 📈 Best practices compliance
 - � Automatic PR polling
 - 📉 Code quality trends
 - 🎯 Issue tracking and resolution
@@ -198,6 +250,39 @@ docker-compose up --build
 **That's it!** 🎉 Open http://localhost:3000 in your browser.
 
 </div>
+
+## 🎨 Usage Examples
+
+### 🆕 Analyze a Full Repository
+
+1. Go to the **Analysis** page
+2. Enter a repository URL:
+   ```
+   https://github.com/AM4517UMOR4NG/Patch_Pilot
+   ```
+3. Click **Start Deep Analysis**
+4. Watch real-time analysis progress
+5. View results in the AI Insights Dashboard!
+
+### 🔄 Analyze a Pull Request
+
+1. Go to the **Analysis** page  
+2. Enter a PR URL:
+   ```
+   https://github.com/owner/repo/pull/123
+   ```
+3. Click **Start Deep Analysis**
+4. Get instant feedback on PR quality
+
+### 📊 View AI Insights Dashboard
+
+1. Complete any analysis
+2. Click **AI Insights** in the navigation
+3. Explore:
+   - 📈 Code Health Metrics
+   - 🧠 AI Recommendations
+   - 📉 Quality Trends
+   - 🎯 Architecture Issues
 
 ---
 
