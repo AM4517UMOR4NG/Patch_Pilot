@@ -30,127 +30,110 @@ export default function InsightsDashboard() {
   const [loading, setLoading] = useState(false)
   const [activeView, setActiveView] = useState<'overview' | 'health' | 'ai' | 'trends'>('overview')
   const [repoData, setRepoData] = useState<any>(null)
+  const [lastAnalysis, setLastAnalysis] = useState<any>(null)
+  const [repositoryStats, setRepositoryStats] = useState({
+    totalFiles: 0,
+    totalLines: 0,
+    commits: 0,
+    branches: 0,
+    pullRequests: 0,
+    issues: 0,
+    lastAnalysis: 'No analysis yet',
+    healthScore: 0,
+    languages: {}
+  })
 
-  // Mock repository data - In production, this would come from API
-  const mockRepoData = {
-    name: 'AM4517UMOR4NG/Patch_Pilot',
-    stars: 1247,
-    forks: 384,
-    contributors: 23,
-    commits: 1847,
-    branches: 12,
-    pullRequests: 156,
-    issues: 43,
-    lastAnalysis: '2 hours ago',
-    healthScore: 87,
-    languages: {
-      'TypeScript': 45,
-      'Java': 35,
-      'JavaScript': 15,
-      'Other': 5
+  useEffect(() => {
+    // Fetch real data from localStorage or API
+    const storedAnalysis = localStorage.getItem('lastAnalysisResult')
+    if (storedAnalysis) {
+      const data = JSON.parse(storedAnalysis)
+      setLastAnalysis(data)
+      
+      // Update stats based on real analysis
+      const findings = data.findings || []
+      const metrics = data.metrics || {}
+      
+      setRepositoryStats({
+        totalFiles: findings.length > 0 ? new Set(findings.map((f: any) => f.filePath)).size : 0,
+        totalLines: 0, // Could be calculated from actual files
+        commits: 0,
+        branches: 0,
+        pullRequests: data.analysisType === 'pull_request' ? 1 : 0,
+        issues: findings.length,
+        lastAnalysis: new Date().toLocaleString(),
+        healthScore: metrics.overallScore || 0,
+        languages: {} // Could be determined from file extensions
+      })
     }
-  }
+    setLoading(false)
+  }, [])
 
-  const healthMetrics: CodeHealthMetric[] = [
+  // Real metrics from analysis
+  const healthMetrics: CodeHealthMetric[] = lastAnalysis ? [
     {
       name: 'Code Quality',
-      value: 92,
-      trend: 'up',
-      description: 'Clean code with minimal technical debt',
+      value: lastAnalysis.metrics?.qualityScore || 0,
+      trend: 'neutral' as const,
+      description: `${lastAnalysis.metrics?.byCategory?.CODE_QUALITY || 0} code quality issues found`,
       color: 'from-green-500 to-emerald-600'
     },
     {
       name: 'Security Score',
-      value: 88,
-      trend: 'up',
-      description: 'Strong security practices, 2 minor vulnerabilities',
+      value: lastAnalysis.metrics?.securityScore || 0,
+      trend: 'neutral' as const,
+      description: `${lastAnalysis.metrics?.byCategory?.SECURITY || 0} security vulnerabilities detected`,
       color: 'from-blue-500 to-cyan-600'
     },
     {
       name: 'Performance',
-      value: 76,
-      trend: 'neutral',
-      description: 'Good performance with room for optimization',
+      value: lastAnalysis.metrics?.performanceScore || 0,
+      trend: 'neutral' as const,
+      description: `${lastAnalysis.metrics?.byCategory?.PERFORMANCE || 0} performance issues`,
       color: 'from-purple-500 to-pink-600'
     },
     {
-      name: 'Test Coverage',
-      value: 68,
-      trend: 'down',
-      description: 'Below target, needs more test cases',
+      name: 'Overall Health',
+      value: lastAnalysis.metrics?.overallScore || 0,
+      trend: 'neutral' as const,
+      description: `Total ${lastAnalysis.findings?.length || 0} issues found`,
       color: 'from-yellow-500 to-orange-600'
     },
     {
-      name: 'Documentation',
-      value: 85,
-      trend: 'up',
-      description: 'Well-documented with API references',
+      name: 'Complexity',
+      value: Math.max(0, 100 - (lastAnalysis.metrics?.byCategory?.COMPLEXITY || 0) * 10),
+      trend: 'neutral' as const,
+      description: `${lastAnalysis.metrics?.byCategory?.COMPLEXITY || 0} complexity issues`,
       color: 'from-indigo-500 to-purple-600'
     },
     {
-      name: 'Maintainability',
-      value: 91,
-      trend: 'up',
-      description: 'Highly maintainable codebase',
+      name: 'Architecture',
+      value: Math.max(0, 100 - (lastAnalysis.metrics?.byCategory?.ARCHITECTURE || 0) * 5),
+      trend: 'neutral' as const,
+      description: `${lastAnalysis.metrics?.byCategory?.ARCHITECTURE || 0} architecture issues`,
       color: 'from-teal-500 to-green-600'
     }
-  ]
+  ] : []
 
-  const aiRecommendations: AIRecommendation[] = [
-    {
-      priority: 'critical',
-      category: 'Security',
-      title: 'Update vulnerable dependencies',
-      impact: 'High',
-      effort: 'Low',
-      description: 'Found 3 packages with known security vulnerabilities. Update axios to v1.6.0, lodash to v4.17.21'
-    },
-    {
-      priority: 'high',
-      category: 'Performance',
-      title: 'Implement database connection pooling',
-      impact: 'High',
-      effort: 'Medium',
-      description: 'Current implementation creates new connections for each request. Pooling can reduce latency by 40%'
-    },
-    {
-      priority: 'high',
-      category: 'Architecture',
-      title: 'Refactor authentication module',
-      impact: 'Medium',
-      effort: 'High',
-      description: 'Authentication logic is spread across multiple files. Consolidate into a service pattern'
-    },
-    {
-      priority: 'medium',
-      category: 'Code Quality',
-      title: 'Add comprehensive error handling',
-      impact: 'Medium',
-      effort: 'Medium',
-      description: 'Several API endpoints lack proper error handling and validation'
-    },
-    {
-      priority: 'medium',
-      category: 'Testing',
-      title: 'Increase test coverage to 80%',
-      impact: 'Medium',
-      effort: 'Medium',
-      description: 'Current coverage at 68%. Focus on critical business logic and edge cases'
-    },
-    {
-      priority: 'low',
-      category: 'Documentation',
-      title: 'Add JSDoc comments to public APIs',
-      impact: 'Low',
-      effort: 'Low',
-      description: 'Improve developer experience with inline documentation'
-    }
-  ]
+  // Real recommendations from analysis findings
+  const aiRecommendations: AIRecommendation[] = lastAnalysis?.findings ? 
+    lastAnalysis.findings
+      .filter((f: any) => f.severity === 'HIGH')
+      .slice(0, 10)
+      .map((f: any) => ({
+        priority: f.severity === 'HIGH' ? 'critical' as const : f.severity === 'MEDIUM' ? 'high' as const : 'medium' as const,
+        category: f.category || 'General',
+        title: f.title || 'Issue detected',
+        impact: f.severity === 'HIGH' ? 'High' : 'Medium',
+        effort: 'Medium',
+        description: f.description || 'Please review this issue in your code'
+      })) : []
 
+  // Real trend data from analysis history
   const trendData = {
-    commits: [45, 52, 38, 61, 55, 72, 68, 75, 82, 78, 85, 92],
-    quality: [78, 79, 81, 80, 82, 84, 83, 85, 87, 88, 90, 92],
-    issues: [23, 21, 25, 19, 17, 15, 18, 14, 12, 10, 8, 6]
+    commits: lastAnalysis ? [lastAnalysis.metrics?.overallScore || 0] : [],
+    quality: lastAnalysis ? [lastAnalysis.metrics?.qualityScore || 0] : [],
+    issues: lastAnalysis ? [lastAnalysis.findings?.length || 0] : []
   }
 
   useEffect(() => {
@@ -159,7 +142,7 @@ export default function InsightsDashboard() {
     const repo = urlParams.get('repo') || localStorage.getItem('lastAnalyzedRepo')
     if (repo) {
       setSelectedRepo(repo)
-      setRepoData(mockRepoData)
+      setRepoData({ name: repo, lastAnalysis: new Date().toLocaleString() })
     }
   }, [])
 

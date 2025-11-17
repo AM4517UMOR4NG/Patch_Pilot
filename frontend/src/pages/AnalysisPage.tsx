@@ -63,9 +63,9 @@ export default function AnalysisPage() {
 
   const validateGitHubUrl = (url: string) => {
     // Support both formats:
-    // https://github.com/owner/repo
+    // https://github.com/owner/repo (e.g., https://github.com/AM4517UMOR4NG/UKF-Tennis-Meja)
     // https://github.com/owner/repo/pull/123
-    const repoPattern = /github\.com\/([^\/]+)\/([^\/]+)(?:\/pull\/(\d+))?/
+    const repoPattern = /^https?:\/\/github\.com\/([a-zA-Z0-9_-]+)\/([a-zA-Z0-9_.-]+?)(?:\.git)?(?:\/pull\/(\d+))?(?:\/)?$/
     return repoPattern.test(url)
   }
 
@@ -105,19 +105,27 @@ export default function AnalysisPage() {
       // Call the new powerful analysis API for the first step
       if (i === 0) {
         try {
-          const response = await fetch('/api/analysis/analyze', {
+          const response = await fetch('http://localhost:8080/api/analysis/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ prUrl })
           })
           
           if (!response.ok) {
-            const errorData = await response.json()
-            throw new Error(errorData.error || `Failed to analyze PR: ${response.status}`)
+            const errorData = await response.json().catch(() => ({}))
+            const errorMessage = errorData.error || `Failed to analyze repository: ${response.status} ${response.statusText}`
+            setError(errorMessage)
+            setAnalysisSteps(prev => prev.map(step => ({ ...step, status: 'error' })))
+            setIsAnalyzing(false)
+            return
           }
           
           const data = await response.json()
           console.log('Analysis response:', data)
+          
+          // Store the result in localStorage for the dashboard
+          localStorage.setItem('lastAnalysisResult', JSON.stringify(data))
+          localStorage.setItem('lastAnalyzedRepo', prUrl)
           
           // If we got immediate results, use them
           if (data.success && data.findings) {
@@ -187,7 +195,11 @@ export default function AnalysisPage() {
           }
         } catch (err: any) {
           console.error('Analysis error:', err)
-          // Don't fail immediately, continue with simulation
+          const errorMessage = err.message || 'Failed to connect to backend. Please ensure the backend server is running.'
+          setError(errorMessage)
+          setAnalysisSteps(prev => prev.map(step => ({ ...step, status: 'error' })))
+          setIsAnalyzing(false)
+          return
         }
       }
     }
