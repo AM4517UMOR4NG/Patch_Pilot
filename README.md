@@ -1166,6 +1166,6 @@ Made with  by [@AM4517UMOR4NG](https://github.com/AM4517UMOR4NG)
 
 ---
 
-**© 2026 Patch Pilot. All rights reserved.**
+**© 2025 Patch Pilot. All rights reserved.**
 
 </div>
