@@ -2,7 +2,7 @@
 
 # 🚀 Patch Pilot -  AI Code Analysis Platform
 
-### * NOW SUPPORTS FULL REPOSITORY ANALYSIS! 🔥*
+###  NOW SUPPORTS FULL REPOSITORY ANALYSIS! 🔥
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-2.0.0-blue?style=flat-square" alt="version" />
