@@ -1,6 +1,6 @@
 <div align="center">
 
-# Patch Pilot -  AI Code Analysis Platform
+# Patch Pilot -  AI Code Analysis
 
 
 
