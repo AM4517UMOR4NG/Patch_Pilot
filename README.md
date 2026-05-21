@@ -140,7 +140,7 @@ Optimized for speed with **parallel analysis**, smart caching, and incremental s
 - 🏛️ Circular dependency risks
 - 🏛️ God class anti-patterns
 - 🏛️ Long method detection
-- 🏛️ Deep nesting analysis
+
 
 </details>
 
